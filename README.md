@@ -1,2 +1,2 @@
-Angular-Infinite-Scroll
+angular-infinite-scroll
 =======================

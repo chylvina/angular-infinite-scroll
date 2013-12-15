@@ -1,0 +1,16 @@
+{
+    "name": "angular-infinite-scroll",
+    "version": "0.1.0",
+    "description": "Infinite Scroll for AngularJS",
+    "keywords": [
+        "angular",
+        "scroll",
+        "ngRepeat"
+    ],
+    "main": "release/angular-infinite-scroll.min.js",
+    "scripts": [
+        "release/angular-infinite-scroll.min.js"
+    ],
+    "license": "MIT",
+    "repo": "chylvina/angular-infinite-scroll"
+}

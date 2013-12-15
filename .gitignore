@@ -1,15 +1,10 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+# master only
+build
 
-pids
-logs
-results
-
-npm-debug.log
+# common
 node_modules
+bower_components
+*~
+
+# webstorm files
+.idea
