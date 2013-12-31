@@ -1,16 +1,17 @@
 {
-    "name": "angular-infinite-scroll",
-    "version": "0.1.0",
-    "main": "./release/angular-infinite-scroll.js",
-    "dependencies": {
-        "angular": "~1.2.0",
-        "jquery": ">=1.7.2",
-        "bootstrap": "~3.0.0",
-        "json3": "~3.2.4",
-        "es5-shim": "~2.0.8",
-        "angular-animate": "~1.2.3"
-    },
-    "devDependencies": {
-        "angular-mocks": "~1.2.0"
-    }
+  "name": "angular-infinite-scroll",
+  "version": "0.1.0",
+  "main": "./release/angular-infinite-scroll.js",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "jquery": ">=1.7.2",
+    "bootstrap": "~3.0.0",
+    "json3": "~3.2.4",
+    "es5-shim": "~2.0.8",
+    "angular-animate": "~1.2.0",
+    "angular-ui-bootstrap3": "~0.6.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.0"
+  }
 }
