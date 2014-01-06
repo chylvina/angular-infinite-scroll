@@ -1,0 +1,23 @@
+.scroll-bar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  overflow: hidden;
+  z-index: 8000;
+}
+
+.scroll-bar-cursor {
+  position: absolute;
+  right: 0px;
+  margin: 1px;
+  width: 8px;
+  border-radius: 3px;
+  background-color: #aaa;
+  top: 0;
+  height: 50px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.4s;
+  transition: background-color 0.4s;
+}

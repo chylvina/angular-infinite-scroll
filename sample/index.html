@@ -2,42 +2,133 @@
 <!-- Our uiRouterSample module defined here -->
 <html lang="en" ng-app="uiRouterSample">
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <!-- using twitter bootstrap, but of course -->
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-    <!-- styles for ng-animate are located here -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Angular Infinite Scroll</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Include both angular.js and angular-ui-router.js-->
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../build"></script>
+  <!-- using twitter bootstrap, but of course -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- styles for ng-animate are located here -->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/list.css">
 
-    <!-- module.js declares the uiRouterSample module and adds items to $rootScope-->
-    <script src="module.js"></script>
-    <!-- factory.js defines a 'contacts' http service and a 'utils' global functions service -->
-    <script src="factory.js"></script>
-    <!-- state.js takes care of all the state configuration, where all the magic's at-->
-    <script src="states.js"></script>
+  <script src="../bower_components/jquery/jquery.min.js"></script>
+  <script src="../bower_components/angular/angular.min.js"></script>
+  <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="../bower_components/angular-ui-bootstrap3/ui-bootstrap-tpls.min.js"></script>
 
-    <!-- could easily use a custom property of the state here instead of 'name' -->
-    <title ng-bind="$state.current.name + ' - ui-router'">ui-router</title>
+  <script src="../src/infinite-scroll.js"></script>
+
+  <script src="js/app.js"></script>
+
+  <!--[if lte IE 8]>
+  <script src="../bower_components/es5-shim/es5-shim.js"></script>
+  <script src="../bower_components/json3/lib/json3.min.js"></script>
+  <![endif]-->
+
 </head>
-<body>
-<div>
-    <div class="email-list-wrapper">
-            <span class="icon icon-goto-top"
-                  data-ng-click="emailListService.newEmailNum = 0; gotoTop = 1; ">
-            </span>
+<body data-ng-app="app" data-ng-controller="appController">
 
-        <div class="scroll-bar">
-            <div class="scroll-bar-cursor"></div>
+<a class="sr-only" href="#content">Skip to main content</a>
+
+<!-- Docs master nav -->
+<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="../" class="navbar-brand">Angular Infinite Scroll</a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="../getting-started">Download</a>
+        </li>
+        <li>
+          <a href="../css">Demos</a>
+        </li>
+        <li>
+          <a href="../components">Documentation</a>
+        </li>
+        <li>
+          <a href="../javascript">FAQ</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active">
+          <a href="../about">View on GitHub</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Callout for the old docs link -->
+<div class="bs-old-docs">
+  <div class="container">
+    <strong>
+      <a href="../2.3.2/">Looking for Bootstrap 2.3.2 docs?</a>
+    </strong>
+    We've moved it to a new home while we push forward with Bootstrap 3. <a href="http://blog.getbootstrap.com/">Read
+    the blog</a> for details.
+  </div>
+</div>
+
+
+<div class="container bs-docs-container">
+  <div class="row">
+    <!--<div class="col-md-3">
+      <div class="bs-sidebar hidden-print" role="complementary">
+        <ul class="nav bs-sidenav">
+
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="#team">Core team</a>
+          </li>
+          <li>
+            <a href="#community">Community</a>
+          </li>
+          <li>
+            <a href="#translations">Translations</a>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>-->
+    <div class="col-md-12" role="main">
+      <!-- History
+      ================================================== -->
+      <div class="bs-docs-section">
+        <div class="page-header">
+          <h1 id="history">Demo 1</h1>
         </div>
-        <div class="email-list-scroll-wrapper"
-             data-ng-init="infiniteScrollArr = []; gotoTop = 0;"
+        <p class="lead">Line 1</p>
+
+        <p>Line 2</p>
+
+        <p>Line 3</p>
+      </div>
+
+      <div style="position: relative;">
+        <div class="scroll-bar">
+          <div class="scroll-bar-cursor"></div>
+        </div>
+        <div class="list-group"
+             data-ng-init="infiniteScrollArr = [];"
              data-infinite-scroll
              data-infinite-scroll-loading="infiniteScrollLoading"
-             data-infinite-scroll-source='emailListService'
+             data-infinite-scroll-source='simulateDataService'
              data-infinite-scroll-data="infiniteScrollArr"
              data-infinite-scroll-next='emailListService.retrieve(20)'
              data-infinite-scroll-distance='69'
@@ -46,22 +137,199 @@
              data-infinite-scroll-target=".email-list"
              data-infinite-scroll-rail=".scroll-bar"
              data-infinite-scroll-bar=".scroll-bar-cursor">
-
-            <div class="email-list">
-                <div class="email"
-                     data-ng-repeat="r in infiniteScrollArr track by r.id"
-                     data-ng-click="onClickEmail(r.id)"
-                     data-draggable
-                     data-dragstart="onDragStart(r.id)">
-                        <span class="icon"></span>
-
-                    abc
-                </div>
-            </div>
-
-            <div data-ng-show="infiniteScrollLoading">loading</div>
+          <a href="#" class="list-group-item active"
+             data-ng-repeat="r in infiniteScrollArr track by r.id">
+            {{r.title}}
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="badge">{{r.num}}</span>
+          </a>
         </div>
+      </div>
+
+
+      <!-- Team
+      ================================================== -->
+      <div class="bs-docs-section">
+        <div class="page-header">
+          <h1 id="team">Core team</h1>
+        </div>
+        <p class="lead">Bootstrap is maintained by the founding team and a small group of invaluable core contributors,
+          with the massive support and involvement of our community.</p>
+
+        <div class="list-group bs-team">
+          <div class="list-group-item">
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=mdo&amp;type=follow"></iframe>
+            <a class="team-member" href="https://github.com/mdo">
+              <img src="http://www.gravatar.com/avatar/bc4ab438f7a4ce1c406aadc688427f2c" alt="@mdo">
+              <strong>Mark Otto</strong>
+              <small>@mdo</small>
+            </a>
+          </div>
+          <div class="list-group-item">
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=fat&amp;type=follow"></iframe>
+            <a class="team-member" href="https://github.com/fat">
+              <img src="http://www.gravatar.com/avatar/a98244cbdacaf1c0b55499466002f7a8" alt="@fat">
+              <strong>Jacob Thornton</strong>
+              <small>@fat</small>
+            </a>
+          </div>
+          <div class="list-group-item">
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=cvrebert&amp;type=follow"></iframe>
+            <a class="team-member" href="https://github.com/cvrebert">
+              <img src="http://www.gravatar.com/avatar/edec428c425453955f770095a7d26c50" alt="@cvrebert">
+              <strong>Chris Rebert</strong>
+              <small>@cvrebert</small>
+            </a>
+          </div>
+          <div class="list-group-item">
+            <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=juthilo&amp;type=follow"></iframe>
+            <a class="team-member" href="https://github.com/juthilo">
+              <img src="http://www.gravatar.com/avatar/0f7dd3ce58a416be5685ea6194f82b11" alt="@juthilo">
+              <strong>Julian Thilo</strong>
+              <small>@juthilo</small>
+            </a>
+          </div>
+        </div>
+        <p>Get involved with Bootstrap development by <a href="https://github.com/twbs/bootstrap/issues/new">opening an
+          issue</a> or submitting a pull request. Read our <a
+          href="https://github.com/twbs/bootstrap/blob/master/CONTRIBUTING.md">contributing guidelines</a> for
+          information on how we develop.</p>
+      </div>
+
+
+      <!-- Community
+      ================================================== -->
+      <div class="bs-docs-section">
+        <div class="page-header">
+          <h1 id="community">Community</h1>
+        </div>
+        <p class="lead">Stay up to date on the development of Bootstrap and reach out to the community with these
+          helpful resources.</p>
+        <ul>
+          <li>Read and subscribe to <a href="http://blog.getbootstrap.com/">The Official Bootstrap Blog</a>.</li>
+          <li>Have a question that's not a feature request or bug report? <a
+            href="http://groups.google.com/group/twitter-bootstrap">Ask on the mailing list.</a></li>
+          <li>Chat with fellow Bootstrappers using IRC in the <code>irc.freenode.net</code> server, in the <a
+            href="irc://irc.freenode.net/#twitter-bootstrap">##twitter-bootstrap channel</a>.
+          </li>
+          <li>Find inspiring examples of people building with Bootstrap at the <a href="http://expo.getbootstrap.com">Bootstrap
+            Expo</a>.
+          </li>
+        </ul>
+        <p>You can also follow <a href="https://twitter.com/twbootstrap">@twbootstrap on Twitter</a> for the latest
+          gossip and awesome music videos.</p>
+      </div>
+
+
+      <!-- Translations
+      ================================================== -->
+      <div class="bs-docs-section">
+        <div class="page-header">
+          <h1 id="translations">Translations</h1>
+        </div>
+        <p class="lead">Community members have translated Bootstrap's documentation into various langauges. None are
+          officially supported and may not always be up to date.</p>
+        <ul>
+          <li><a href="http://v3.bootcss.com/">Bootstrap 中文文档 (Chinese)</a></li>
+          <li><a href="http://www.oneskyapp.com/docs/bootstrap/ru">Bootstrap по-русски (Russian)</a></li>
+          <li><a href="http://www.oneskyapp.com/docs/bootstrap/es">Bootstrap en Español (Spanish)</a></li>
+          <li><a href="http://twbs.site-konstruktor.com.ua">Bootstrap ua Українською (Ukrainian)</a></li>
+        </ul>
+        <p>Have another language to add, or perhaps a different or better translation? Let us know by <a
+          href="https://github.com/twbs/bootstrap/issues/new">opening an issue</a>.</p>
+      </div>
+
     </div>
+  </div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="bs-social">
+      <ul class="bs-social-buttons">
+        <li>
+          <iframe class="github-btn"
+                  src="http://ghbtns.com/github-btn.html?user=twbs&amp;repo=bootstrap&amp;type=watch&amp;count=true"
+                  width="100" height="20" title="Star on GitHub"></iframe>
+        </li>
+        <li>
+          <iframe class="github-btn"
+                  src="http://ghbtns.com/github-btn.html?user=twbs&amp;repo=bootstrap&amp;type=fork&amp;count=true"
+                  width="102" height="20" title="Fork on GitHub"></iframe>
+        </li>
+        <li class="follow-btn">
+          <a href="https://twitter.com/twbootstrap" class="twitter-follow-button" data-link-color="#0069D6"
+             data-show-count="true">Follow @twbootstrap</a>
+        </li>
+        <li class="tweet-btn">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://getbootstrap.com/"
+             data-count="horizontal" data-via="twbootstrap" data-related="mdo:Creator of Twitter Bootstrap">Tweet</a>
+        </li>
+      </ul>
+    </div>
+
+
+    <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a>
+      and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+
+    <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>,
+      documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+    <ul class="footer-links">
+      <li>Currently v3.0.3</li>
+      <li class="muted">&middot;</li>
+      <li><a href="../2.3.2/">Bootstrap 2.3.2 docs</a></li>
+      <li class="muted">&middot;</li>
+      <li><a href="http://blog.getbootstrap.com">Blog</a></li>
+      <li class="muted">&middot;</li>
+      <li><a href="https://github.com/twbs/bootstrap/issues?state=open">Issues</a></li>
+      <li class="muted">&middot;</li>
+      <li><a href="https://github.com/twbs/bootstrap/releases">Releases</a></li>
+    </ul>
+  </div>
+</footer>
+
+
+<div>
+  <div class="email-list-wrapper">
+            <span class="icon icon-goto-top"
+                  data-ng-click="emailListService.newEmailNum = 0; gotoTop = 1; ">
+            </span>
+
+    <div class="scroll-bar">
+      <div class="scroll-bar-cursor"></div>
+    </div>
+    <div class="email-list-scroll-wrapper"
+         data-ng-init="infiniteScrollArr = []; gotoTop = 0;"
+         data-infinite-scroll
+         data-infinite-scroll-loading="infiniteScrollLoading"
+         data-infinite-scroll-source='emailListService'
+         data-infinite-scroll-data="infiniteScrollArr"
+         data-infinite-scroll-next='emailListService.retrieve(20)'
+         data-infinite-scroll-distance='69'
+         data-infinite-scroll-top="infiniteScrollService.scrollTop"
+         data-infinite-scroll-gotop='gotoTop'
+         data-infinite-scroll-target=".email-list"
+         data-infinite-scroll-rail=".scroll-bar"
+         data-infinite-scroll-bar=".scroll-bar-cursor">
+
+      <div class="email-list">
+        <div class="email"
+             data-ng-repeat="r in infiniteScrollArr track by r.id"
+             data-ng-click="onClickEmail(r.id)"
+             data-draggable
+             data-dragstart="onDragStart(r.id)">
+          <span class="icon"></span>
+
+          abc
+        </div>
+      </div>
+
+      <div data-ng-show="infiniteScrollLoading">loading</div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
